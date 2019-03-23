@@ -9,16 +9,12 @@ class ReversiPackages(object):
     This class is packages used in reversi_processor.py
     '''
 
-    def __init__(self, board=None, options=None, display_board=True):
+    def __init__(self, board=None, options=None):
 
         '''
         Initialize class parameters.
         
         Args:
-            display_board(boolean):
-                False -> not display board
-                True -> display board
-
             board(list):
                 shape = (total_square_num=64, 1)
                 instructions: board state
@@ -63,17 +59,6 @@ class ReversiPackages(object):
         #   values: list of how many stones reversed when putting stone there for all 8 directions
         self.__reversible_stone_number_dict = {}
 
-        self.__display_board = display_board
-        # make class variables for displaying board
-        if self.__display_board:
-
-            # converter dictinary (1, -1, 0 -> "⚪️", " ⚫️", "None")
-            self.__options = settings['MARKS']
-
-            # number board (1 ~ 64) for displaying
-            self.__index_board_for_displaying = []
-            for index in range(self.__options['SQUARE_NUM']):
-                self.__index_board_for_displaying.append(index + 1)
 
     def _get_index_in_padded_board(self, index_in_1d_board):
         '''
