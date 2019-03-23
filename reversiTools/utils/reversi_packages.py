@@ -206,8 +206,7 @@ class ReversiPackages(object):
 
         if board == None:
             board = self.__board
-        else:
-            board = board
+
         # change the shape of board list to 2 dimension numpy array
         board_8x8 = np.array(board).reshape(self.__options['SIDES_NUM'], self.__options['SIDES_NUM'])
 
