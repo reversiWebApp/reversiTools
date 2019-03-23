@@ -5,12 +5,12 @@ except ImportError:
     from pip.req import parse_requirements
 setup(
     name = 'reversiTool',
-    version='1.0.1',
+    version='1.0.5',
     url = 'https://github.com/reversiWebApp/reversiTools.git',
     license = 'Free',
     author = 'Hiroya Iyori',
     author_email = 'vp054az116@gmail.com',
-    description = 'Hoge',
+    description='Reversi API for machine learning and web api',
     install_requires = ['setuptools', 'numpy', 'toml'],
     packages=find_packages(),
     include_package_data = True
