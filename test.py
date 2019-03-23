@@ -16,4 +16,4 @@ for _ in range(16):
 for _ in range(16):
     a.append(0)
 
-print(step(a, 16, -1))
+print(step(a, 14, -1))
