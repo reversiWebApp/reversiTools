@@ -20,9 +20,11 @@ def step(board, stone_putted_index, player):
             1 -> this player win
             2 -> draw
     """
-    for index in len(board):
-        if board[index] == 2:
-            board[index] = 0
+    "board "
+    if board:
+        for index in range(len(board)):
+            if board[index] == 2:
+                board[index] = 0
 
     reversi_packages = ReversiPackages(
         board=board,
@@ -36,9 +38,9 @@ def step(board, stone_putted_index, player):
     else:
         reversi_packages.reversing_stones(stone_putted_index, player)
         if reversi_packages.get_stone_putable_pos(opponent_player):
-            return reversi_packages.get_board_status(), opponent_player, 0
+            return reversi_packages.get_board_status(opponent_player), opponent_player, 0
         elif reversi_packages.get_stone_putable_pos(player):
-            return reversi_packages.get_board_status(), player, 0
+            return reversi_packages.get_board_status(player), player, 0
         else:
             if player == reversi_packages.check_winner():
                 return None, None, 1
@@ -54,9 +56,10 @@ def reset():
         shape = (1,64)
     :return: preceding player(int) = -1(black)
     """
+    preceding_player = -1
     reversi_packages = ReversiPackages(
         board=None,
         options=None,
         display_board=None
     )
-    return reversi_packages.get_board_status(), -1
+    return reversi_packages.get_board_status(preceding_player), preceding_player

@@ -32,8 +32,7 @@ class ReversiPackages(object):
 
         # self.__options is global parameters
         if options == None:
-            # self.__options = toml.load('./reversiAPI/utils/settings.toml')['REVERSI_PACKAGES']
-            self.__options = toml.load('./utils/settings.toml')['REVERSI_PACKAGES']
+            self.__options = toml.load('./reversiTools/utils/settings.toml')['REVERSI_PACKAGES']
         else:
             self.__options = options
 
@@ -69,8 +68,8 @@ class ReversiPackages(object):
         if self.__display_board:
 
             # converter dictinary (1, -1, 0 -> "⚪️", " ⚫️", "None")
-            # self.__marks = toml.load('./reversiAPI/utils/settings.toml')['MARKS']
-            self.__marks = toml.load('./settings.toml')['MARKS']
+            self.__marks = toml.load('./reversiTools/utils/settings.toml')['MARKS']
+
 
             # number board (1 ~ 64) for displaying
             self.__index_board_for_displaying = []
@@ -323,7 +322,7 @@ class ReversiPackages(object):
 
     def get_board_status(self, stone_color):
         putable_pos_list = self.get_stone_putable_pos(stone_color)
-        board = self.__bord
-        for i in putable_pos_list:
-            board[i] = 2
+        board = copy.deepcopy(self.__board)
+        for index in putable_pos_list:
+            board[index] = 2
         return board
