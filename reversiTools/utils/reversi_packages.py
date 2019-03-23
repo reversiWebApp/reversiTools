@@ -70,7 +70,7 @@ class ReversiPackages(object):
 
             # converter dictinary (1, -1, 0 -> "⚪️", " ⚫️", "None")
             # self.__marks = toml.load('./reversiAPI/utils/settings.toml')['MARKS']
-            self.__marks = toml.load('./utils/settings.toml')['MARKS']
+            self.__marks = toml.load('./settings.toml')['MARKS']
 
             # number board (1 ~ 64) for displaying
             self.__index_board_for_displaying = []
