@@ -1,7 +1,7 @@
 import copy
 
 import numpy as np
-import toml
+import settings
 
 
 class ReversiPackages(object):
@@ -26,14 +26,13 @@ class ReversiPackages(object):
                               white stone -> 1
                               brack stone -> -1
 
-            options(toml):
+            options(dict):
                 global parameters.
         '''
 
         # self.__options is global parameters
         if options == None:
-            with open('reversiTools/utils/settings.toml', 'r') as f:
-                self.__options = toml.load(f.read())['REVERSI_PACKAGES']
+            self.__options = settings['REVERSI_PACKAGES']
         else:
             self.__options = options
 
@@ -69,8 +68,7 @@ class ReversiPackages(object):
         if self.__display_board:
 
             # converter dictinary (1, -1, 0 -> "⚪️", " ⚫️", "None")
-            with open('reversiTools/utils/settings.toml', 'r') as f:
-                self.__options = toml.load(f.read())['MARKS']
+            self.__options = settings['MARKS']
 
             # number board (1 ~ 64) for displaying
             self.__index_board_for_displaying = []
