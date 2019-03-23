@@ -1,7 +1,8 @@
 import copy
 
 import numpy as np
-import settings
+
+from reversiTools.utils.settings import REVERSI_PACKAGES
 
 
 class ReversiPackages(object):
@@ -28,7 +29,7 @@ class ReversiPackages(object):
 
         # self.__options is global parameters
         if options == None:
-            self.__options = settings['REVERSI_PACKAGES']
+            self.__options = REVERSI_PACKAGES
         else:
             self.__options = options
 
