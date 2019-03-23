@@ -1,4 +1,4 @@
-from reversiTools.utils import ReversiPackages
+from reversiTools.utils.reversi_packages import ReversiPackages
 
 
 def step(board, stone_putted_index, player):
