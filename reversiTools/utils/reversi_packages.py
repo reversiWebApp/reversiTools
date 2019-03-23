@@ -321,5 +321,9 @@ class ReversiPackages(object):
                 self.__board[putting_index + (self.__options['SIDES_NUM'] * vector[0] + vector[1]) * i] *= \
                     self.__options['CHANGE_COLOR']
 
-    def get_board_status(self):
-        return self.__board
+    def get_board_status(self, stone_color):
+        putable_pos_list = self.get_stone_putable_pos(stone_color)
+        board = self.__bord
+        for i in putable_pos_list:
+            board[i] = 2
+        return board

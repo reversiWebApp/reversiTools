@@ -20,6 +20,10 @@ def step(board, stone_putted_index, player):
             1 -> this player win
             2 -> draw
     """
+    for index in len(board):
+        if board[index] == 2:
+            board[index] = 0
+
     reversi_packages = ReversiPackages(
         board=board,
         options=None,
