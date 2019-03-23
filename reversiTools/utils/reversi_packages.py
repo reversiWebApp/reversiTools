@@ -32,7 +32,7 @@ class ReversiPackages(object):
 
         # self.__options is global parameters
         if options == None:
-            self.__options = toml.load('./reversiTools/utils/settings.toml')['REVERSI_PACKAGES']
+            self.__options = toml.load('/reversiTools/utils/settings.toml')['REVERSI_PACKAGES']
         else:
             self.__options = options
 
@@ -68,7 +68,7 @@ class ReversiPackages(object):
         if self.__display_board:
 
             # converter dictinary (1, -1, 0 -> "⚪️", " ⚫️", "None")
-            self.__marks = toml.load('./reversiTools/utils/settings.toml')['MARKS']
+            self.__marks = toml.load('/reversiTools/utils/settings.toml')['MARKS']
 
 
             # number board (1 ~ 64) for displaying
