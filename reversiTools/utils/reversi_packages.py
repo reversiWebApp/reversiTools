@@ -1,7 +1,8 @@
 import copy
 
 import numpy as np
-import settings
+
+from reversiTools.utils.settings import REVERSI_PACKAGES
 
 
 class ReversiPackages(object):
@@ -10,7 +11,6 @@ class ReversiPackages(object):
     '''
 
     def __init__(self, board=None, options=None):
-
         '''
         Initialize class parameters.
         
@@ -28,7 +28,7 @@ class ReversiPackages(object):
 
         # self.__options is global parameters
         if options == None:
-            self.__options = settings['REVERSI_PACKAGES']
+            self.__options = REVERSI_PACKAGES
         else:
             self.__options = options
 
@@ -186,8 +186,7 @@ class ReversiPackages(object):
 
         return is_reversible, counter
 
-    def get_stone_putable_pos(self, stone_color):
-
+    def get_stone_putable_pos(self, stone_color, board=None):
         '''
         This function get stone putable position from player's stone_color
 
@@ -206,8 +205,11 @@ class ReversiPackages(object):
 
         '''
 
+        if board == None:
+            board = self.__board
+
         # change the shape of board list to 2 dimension numpy array
-        board_8x8 = np.array(self.__board).reshape(self.__options['SIDES_NUM'], self.__options['SIDES_NUM'])
+        board_8x8 = np.array(board).reshape(self.__options['SIDES_NUM'], self.__options['SIDES_NUM'])
 
         # Pad the edges
         vertical_edge_pad = np.full((1, self.__options['SIDES_NUM']), self.__options['EDGE_PAD'])
@@ -217,7 +219,7 @@ class ReversiPackages(object):
 
         empty_pos_index_list = []
         for index in range(self.__options['SQUARE_NUM']):
-            if self.__board[index] == self.__options['EMPTY']:
+            if self.board[index] == self.__options['EMPTY']:
                 empty_pos_index_list.append(index)
 
         # putable_pos_set is a set of stone putable place
@@ -249,6 +251,8 @@ class ReversiPackages(object):
             # save the empty_pos_index and reversible_stone_number_list in reversible_stone_number_dict to use in\
             # reversing_stones function
             self.__reversible_stone_number_dict[empty_pos_index] = reversible_stone_number_list
+
+        self.__board = board
 
         return list(putable_pos_set)
 
