@@ -12,6 +12,6 @@ setup(
     author_email = 'vp054az116@gmail.com',
     description = 'Hoge',
     install_requires = ['setuptools', 'numpy', 'toml'],
-    packages = ["reversiTools"],
+    packages=find_packages(),
     include_package_data = True
 )
