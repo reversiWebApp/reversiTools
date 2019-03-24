@@ -1,4 +1,4 @@
-# reversiTools==1.0.7
+# reversiTools==1.0.8
 Reversi tools for ml and  webapi
 
 # to install
