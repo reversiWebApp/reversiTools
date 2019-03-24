@@ -219,7 +219,7 @@ class ReversiPackages(object):
 
         empty_pos_index_list = []
         for index in range(self.__options['SQUARE_NUM']):
-            if self.board[index] == self.__options['EMPTY']:
+            if self.__board[index] == self.__options['EMPTY']:
                 empty_pos_index_list.append(index)
 
         # putable_pos_set is a set of stone putable place
@@ -308,7 +308,10 @@ class ReversiPackages(object):
                 self.__board[putting_index + (self.__options['SIDES_NUM'] * vector[0] + vector[1]) * i] *= \
                     self.__options['CHANGE_COLOR']
 
-    def get_board_status(self, stone_color):
+    def get_board_status(self):
+        return self.__board
+
+    def get_board_status_filled_with_2(self, stone_color):
         putable_pos_list = self.get_stone_putable_pos(stone_color)
         board = copy.deepcopy(self.__board)
         for index in putable_pos_list:

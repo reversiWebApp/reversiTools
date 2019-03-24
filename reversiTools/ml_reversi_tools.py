@@ -28,7 +28,7 @@ def step(board, stone_putted_index, player):
 
     reversi_packages = ReversiPackages(
         board=board,
-        options=None,
+        options=None
     )
     opponent_player = -1 * player
     stone_putable_pos_list = reversi_packages.get_stone_putable_pos(player)
@@ -37,9 +37,9 @@ def step(board, stone_putted_index, player):
     else:
         reversi_packages.reversing_stones(stone_putted_index, player)
         if reversi_packages.get_stone_putable_pos(opponent_player):
-            return reversi_packages.get_board_status(opponent_player), opponent_player, 0
+            return reversi_packages.get_board_status_filled_with_2(opponent_player), opponent_player, 0
         elif reversi_packages.get_stone_putable_pos(player):
-            return reversi_packages.get_board_status(player), player, 0
+            return reversi_packages.get_board_status_filled_with_2(player), player, 0
         else:
             if player == reversi_packages.check_winner():
                 return None, None, 1
@@ -60,4 +60,4 @@ def reset():
         board=None,
         options=None
     )
-    return reversi_packages.get_board_status(preceding_player), preceding_player
+    return reversi_packages.get_board_status_filled_with_2(preceding_player), preceding_player
