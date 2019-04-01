@@ -1,1 +1,2 @@
 include requirements.txt
+include reversiTools/utils/dqn_models/model1/*.pt
