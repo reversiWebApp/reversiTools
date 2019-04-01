@@ -80,7 +80,7 @@ def step(board, stone_putted_index, player):
             1 -> this player win
             2 -> draw
     """
-    "board "
+
     if board:
         for index in range(len(board)):
             if board[index] == 2:
@@ -126,7 +126,7 @@ def get_dqn_move(board, player):
         1 -> white
     :return: index(int)
     """
-    "board "
+
     if board:
         for index in range(len(board)):
             if board[index] == 2:
