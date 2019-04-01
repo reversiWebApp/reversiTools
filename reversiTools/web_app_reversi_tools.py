@@ -1,8 +1,12 @@
+import os
 import random
 
 import numpy as np
+import torch
 
+from reversiTools.utils.dqn_models.models import TheModelClass
 from reversiTools.utils.reversi_packages import ReversiPackages
+from reversiTools.utils.settings import DQN
 
 
 def intlist2strings(li):
@@ -76,7 +80,7 @@ def step(board, stone_putted_index, player):
             1 -> this player win
             2 -> draw
     """
-    "board "
+
     if board:
         for index in range(len(board)):
             if board[index] == 2:
@@ -103,3 +107,48 @@ def step(board, stone_putted_index, player):
                 return None, None, -1
             else:
                 return None, None, 2
+
+
+def _load_model(file_path):
+    model = TheModelClass(65, 128, 64)
+    model.load_state_dict(torch.load(file_path))
+    model.eval()
+    return model
+
+
+def get_dqn_move(board, player):
+    """
+    get dqn move index from board, stone color and pt file path
+    :param board: list(int)
+        shape=(1,64)
+    :param stone_color:int
+         -1 -> black
+        1 -> white
+    :return: index(int)
+    """
+
+    if board:
+        for index in range(len(board)):
+            if board[index] == 2:
+                board[index] = 0
+
+    reversi_package = ReversiPackages(board=board, options=None)
+    executing_file_path = os.path.dirname(os.path.abspath(__file__))
+    pt_path = DQN['model1']
+    file_path = os.path.join(executing_file_path, pt_path)
+    model = _load_model(file_path)
+    with torch.no_grad():
+        input_array = np.append(
+            np.array(player),
+            np.array(reversi_package.get_board_status_filled_with_2(player))
+        )
+        input_data = torch.from_numpy(input_array).type(torch.FloatTensor)
+        input_data_unsqueezed = torch.unsqueeze(input_data, 0)
+        q_values = np.array(model(input_data_unsqueezed)).reshape(-1)
+
+    putable_index = reversi_package.get_stone_putable_pos(player)
+    stone_put_index = putable_index[0]
+    for index in putable_index:
+        if q_values[stone_put_index] < q_values[index]:
+            stone_put_index = index
+    return stone_put_index

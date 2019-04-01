@@ -14,3 +14,7 @@ REVERSI_PACKAGES = {
     'INITIAL_WHITE_PLACES': [27, 36],
     'INITIAL_BLACK_PLACES': [28, 35]
 }
+
+DQN = {
+    'model1': 'utils/dqn_models/model1/model1.pt'
+}
