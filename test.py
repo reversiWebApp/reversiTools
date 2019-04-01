@@ -3,6 +3,7 @@
 # unittest.main()
 
 
+from reversiTools.web_app_reversi_tools import get_dqn_move
 from reversiTools.web_app_reversi_tools import get_simple_board
 from reversiTools.web_app_reversi_tools import step
 
@@ -20,3 +21,6 @@ b = step(a, 14, -1)
 print(b)
 
 print(get_simple_board(b[0]))
+
+dqn_index = get_dqn_move(a, -1)
+print(dqn_index)
