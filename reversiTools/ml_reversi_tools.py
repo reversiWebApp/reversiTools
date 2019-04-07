@@ -61,3 +61,21 @@ def reset():
         options=None
     )
     return reversi_packages.get_board_status_filled_with_2(preceding_player), preceding_player
+
+
+def get_stone_putable_pos(board, player):
+    """
+    get stone putable index from board state and player's stone color
+    :param board: list(int)
+        shape = (1,64)
+    :param player:int
+         -1 -> black
+        1 -> white
+    :return: stone_putable_pos: list(int)
+    """
+    reversi_packages = ReversiPackages(
+        board=board,
+        options=None
+    )
+    stone_putable_pos = reversi_packages.get_stone_putable_pos(player)
+    return stone_putable_pos
