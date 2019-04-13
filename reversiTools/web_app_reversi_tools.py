@@ -10,7 +10,7 @@ from reversiTools.utils.settings import DQN
 
 
 def intlist2strings(intlist):
-    string_list = map(str, intlist)
+    string_list = list(map(str, intlist))
     return ','.join(string_list)
 
 
