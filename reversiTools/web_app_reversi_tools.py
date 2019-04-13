@@ -10,12 +10,14 @@ from reversiTools.utils.settings import DQN
 
 
 def intlist2strings(li):
-    li = [str(fac) for fac in li]
-    return ','.join(li)
+    strings = ""
+    for number in li:
+        strings += str(number)
+    return strings
 
 
 def strings2intlist(strings):
-    return strings.split(',')
+    return [int(number) for number in strings]
 
 
 def list2matrix(li):
