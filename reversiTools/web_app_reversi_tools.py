@@ -9,15 +9,27 @@ from reversiTools.utils.reversi_packages import ReversiPackages
 from reversiTools.utils.settings import DQN
 
 
-def intlist2strings(li):
+def intlist2strings(intlist):
     strings = ""
-    for number in li:
-        strings += str(number)
+    for number in intlist:
+        strings += str(number)+","
     return strings
 
 
 def strings2intlist(strings):
-    return [int(number) for number in strings]
+    strings.replace(",", "")
+    intlist = []
+    was_hyphen = False
+    for char in strings:
+        if was_hyphen == False:
+            if char == "-":
+                was_hyphen = True
+                intlist.append(-1)
+            else:
+                intlist.append(int(char))
+        else:
+            was_hyphen = False
+    return intlist
 
 
 def list2matrix(li):
