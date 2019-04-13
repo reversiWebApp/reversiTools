@@ -29,16 +29,16 @@ def matrix2list(matrix):
 def get_simple_board(board):
     """
     get the board not using 2 and stone putable pos list from the board filled with 2
-    :param board: list(int)
+    :param board: list(strings)
         shape = (1,64)
-    :return: board: list(int)
+    :return: board: list(strings)
                 shape=(1,64)
-            stone_putable_pos:list(int)
+            stone_putable_pos:list(strings)
     """
     stone_putable_pos = []
     for index in range(len(board)):
-        if board[index] == 2:
-            board[index] = 0
+        if board[index] == "2":
+            board[index] = "0"
             stone_putable_pos.append(index)
     return board, stone_putable_pos
 
