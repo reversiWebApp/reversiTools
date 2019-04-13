@@ -9,15 +9,14 @@ from reversiTools.utils.reversi_packages import ReversiPackages
 from reversiTools.utils.settings import DQN
 
 
-def intlist2strings(li):
-    strings = ""
-    for number in li:
-        strings += str(number)
-    return strings
+def intlist2strings(intlist):
+    string_list = map(str, intlist)
+    return ','.join(string_list)
 
 
 def strings2intlist(strings):
-    return [int(number) for number in strings]
+    string_list = strings.split(',')
+    return map(int, string_list)
 
 
 def list2matrix(li):
