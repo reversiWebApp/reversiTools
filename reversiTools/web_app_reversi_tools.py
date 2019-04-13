@@ -17,6 +17,7 @@ def intlist2strings(li):
 
 
 def strings2intlist(strings):
+    strings = strings.replace(",","")
     return [int(number) for number in strings]
 
 
