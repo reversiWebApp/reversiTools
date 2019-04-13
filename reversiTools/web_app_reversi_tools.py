@@ -10,26 +10,13 @@ from reversiTools.utils.settings import DQN
 
 
 def intlist2strings(intlist):
-    strings = ""
-    for number in intlist:
-        strings += str(number)+","
-    return strings
+    string_list = map(str, intlist)
+    return ','.join(string_list)
 
 
 def strings2intlist(strings):
-    strings.replace(",", "")
-    intlist = []
-    was_hyphen = False
-    for char in strings:
-        if was_hyphen == False:
-            if char == "-":
-                was_hyphen = True
-                intlist.append(-1)
-            else:
-                intlist.append(int(char))
-        else:
-            was_hyphen = False
-    return intlist
+    string_list = strings.split(',')
+    return map(int, string_list)
 
 
 def list2matrix(li):
