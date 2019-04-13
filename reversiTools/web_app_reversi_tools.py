@@ -10,13 +10,13 @@ from reversiTools.utils.settings import DQN
 
 
 def intlist2strings(intlist):
-    string_list = map(str, intlist)
+    string_list = list(map(str, intlist))
     return ','.join(string_list)
 
 
 def strings2intlist(strings):
     string_list = strings.split(',')
-    return map(int, string_list)
+    return list(map(int, string_list))
 
 
 def list2matrix(li):
