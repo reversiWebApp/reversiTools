@@ -99,6 +99,8 @@ def step(board, stone_putted_index, player):
     stone_putable_pos_list = reversi_packages.get_stone_putable_pos(player)
     if stone_putted_index not in stone_putable_pos_list:
         valid_flag = False
+        for index in stone_putable_pos_list:
+            board[index] = 2
         return board, player, 0, valid_flag
     else:
         valid_flag = True
