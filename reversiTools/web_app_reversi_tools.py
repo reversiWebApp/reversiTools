@@ -81,6 +81,9 @@ def step(board, stone_putted_index, player):
             0 -> game is not end yet
             1 -> this player win
             2 -> draw
+    :return:valid flag(boolean):
+        True -> user action  valid
+        False -> user action invalid
     """
 
     if board:
@@ -95,20 +98,22 @@ def step(board, stone_putted_index, player):
     opponent_player = -1 * player
     stone_putable_pos_list = reversi_packages.get_stone_putable_pos(player)
     if stone_putted_index not in stone_putable_pos_list:
-        return None, None, -1
+        valid_flag = False
+        return board, player, 0, valid_flag
     else:
+        valid_flag = True
         reversi_packages.reversing_stones(stone_putted_index, player)
         if reversi_packages.get_stone_putable_pos(opponent_player):
-            return reversi_packages.get_board_status_filled_with_2(opponent_player), opponent_player, 0
+            return reversi_packages.get_board_status_filled_with_2(opponent_player), opponent_player, 0, valid_flag
         elif reversi_packages.get_stone_putable_pos(player):
-            return reversi_packages.get_board_status_filled_with_2(player), player, 0
+            return reversi_packages.get_board_status_filled_with_2(player), player, 0, valid_flag
         else:
             if player == reversi_packages.check_winner():
-                return None, None, 1
+                return board, player, 1, valid_flag
             elif player == -1 * reversi_packages.check_winner():
-                return None, None, -1
+                return board, player, -1, valid_flag
             else:
-                return None, None, 2
+                return board, player, 2, valid_flag
 
 
 def _load_model(file_path):
