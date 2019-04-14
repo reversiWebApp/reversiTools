@@ -165,11 +165,11 @@ def intlist2symbol_list(intlist):
         intlist(list):
             length = 64
             values = (1, -1, 0, 2)
-    
+
     Returns:
         symbol_list(list)
             length = 64
-            values = ('⚪️','⚫️',str(index),"☆") 
+            values = ('⚪️','⚫️',str(index),"☆")
     '''
     assert len(intlist) == 64, 'input list length is invalid'
 
@@ -177,7 +177,7 @@ def intlist2symbol_list(intlist):
     index_list = [i for i in range(1, 65)]
     for idx, num in enumerate(intlist):
         if num == 0:
-            symbol_list.append(str(index_list[idx]))
+            symbol_list.append(str(index_list[idx]).zfill(2))
         else:
             symbol_list.append(MARKS[str(num)])
 
