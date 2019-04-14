@@ -183,3 +183,14 @@ def intlist2symbol_list(intlist):
 
     return symbol_list
 
+
+def inc_list(putable_pos):
+    """
+    plus 1 for all element of putablie pos list
+    :param putable_pos:list(int)
+    :return:incremented_list:list(int)
+    """
+    incremented_list = []
+    for index in putable_pos:
+        incremented_list.append(index + 1)
+    return incremented_list
