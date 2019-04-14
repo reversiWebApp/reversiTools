@@ -18,3 +18,10 @@ REVERSI_PACKAGES = {
 DQN = {
     'model1': 'utils/dqn_models/model1/model1.pt'
 }
+
+MARKS = {
+    '0': ' ',
+    '1': '⚪️',
+    '-1': '⚫️',
+    '2': '☆'
+}

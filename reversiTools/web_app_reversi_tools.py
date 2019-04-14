@@ -7,6 +7,7 @@ import torch
 from reversiTools.utils.dqn_models.models import TheModelClass
 from reversiTools.utils.reversi_packages import ReversiPackages
 from reversiTools.utils.settings import DQN
+from reversiTools.utils.settings import MARKS
 
 
 def intlist2strings(intlist):
@@ -153,3 +154,28 @@ def get_dqn_move(board, player):
         if q_values[stone_put_index] < q_values[index]:
             stone_put_index = index
     return stone_put_index
+
+
+def intlist2symbol_list(intlist):
+    '''
+    this function get symbol_list('⚪️','⚫️'," ","☆") from intlist(1,0,-1,2)
+    this symbol list is used to show clients reversi board image
+
+    Args:
+        intlist(list):
+            length = 64
+            values = (1, -1, 0, 2)
+    
+    Returns:
+        symbol_list(list)
+            length = 64
+            values = ('⚪️','⚫️'," ","☆") 
+    '''
+    assert len(intlist) == 64, 'input list length is invalid'
+
+    symbol_list = []
+    for num in intlist:
+        symbol_list.append(MARKS[str(num)])
+
+    return symbol_list
+
