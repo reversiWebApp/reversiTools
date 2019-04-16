@@ -10,16 +10,27 @@ from reversiTools.web_app_reversi_tools import inc_list
 from reversiTools.web_app_reversi_tools import intlist2symbol_list
 from reversiTools.web_app_reversi_tools import step
 
-print(len(step(None, 19, -1)[0]))
+
 a = []
-for _ in range(16):
+for _ in range(19):
     a.append(0)
-for _ in range(16):
-    a.append(1)
-for _ in range(16):
-    a.append(-1)
-for _ in range(16):
+a.append(-1)
+a.append(1)
+for _ in range(6):
     a.append(0)
+a.append(-1)
+a.append(1)
+for _ in range(6):
+    a.append(0)
+a.append(-1)
+a.append(1)
+for _ in range(27):
+    a.append(0)
+b = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, -1, 2, 0, 0, 0, 0, 0, 0, -1, -1, 0, 0, 0, 0, 0, 2, -1, 1,
+     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+print(b[21])
+print(step(b, 21, -1))
+
 b = step(a, 14, -1)
 print(len(b[0]))
 
@@ -30,12 +41,12 @@ print(dqn_index)
 print(get_stone_putable_pos(a, -1))
 
 input_list = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-        2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-        1, 0, -1, 2, 1, 0, -1, 2, 1, 0, -1, 2,
-        1, 0, -1, 2, 1, 0, -1, 2, 1, 0, -1, 2
-        ]
+              0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+              -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+              2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+              1, 0, -1, 2, 1, 0, -1, 2, 1, 0, -1, 2,
+              1, 0, -1, 2, 1, 0, -1, 2, 1, 0, -1, 2
+              ]
 print(intlist2symbol_list(input_list))
 
 print(inc_list([1, 3, 4, 5, 5, 6, 92, 2354]))
