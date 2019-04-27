@@ -31,9 +31,9 @@ def matrix2list(matrix):
     return np.array(matrix).reshape(1, -1).tolist()[0]
 
 
-def get_simple_board(board):
+def get_stone_putable_pos(board, get_simple_board=False):
     """
-    get the board not using 2 and stone putable pos list from the board filled with 2
+    get the boarsd not using 2 and stone putable pos list from the board filled with 2. if get_simple_board=False, return only stone_putable_pos.
     :param board: list(int)
         shape = (1,64)
     :return: board: list(int)
@@ -46,8 +46,10 @@ def get_simple_board(board):
         if return_board[index] == 2:
             return_board[index] = 0
             stone_putable_pos.append(index)
-    return return_board, stone_putable_pos
-
+    if get_simple_board:
+        return return_board, stone_putable_pos
+    else:
+        return stone_putable_pos
 
 def get_initial_status():
     """
@@ -144,7 +146,7 @@ def get_cp_move(board, player, cp_name):
     :param player:int
          -1 -> black
         1 -> white
-    :param cp_name:str
+    :param cp_name:str('DQN', 'SL', 'RANDOM')
     :return: index(int)
     """
 
@@ -233,9 +235,7 @@ def inc_list(putable_pos):
     :param putable_pos:list(int)
     :return incremented_list:list(int)
     """
-    incremented_list = []
-    for index in putable_pos:
-        incremented_list.append(index + 1)
+    incremented_list = [i + 1 for i in putable_pos]
     return incremented_list
 
 
