@@ -3,9 +3,8 @@
 # unittest.main()
 
 
-from reversiTools.ml_reversi_tools import get_stone_putable_pos
 from reversiTools.web_app_reversi_tools import get_cp_move, count_stone
-from reversiTools.web_app_reversi_tools import get_simple_board
+from reversiTools.web_app_reversi_tools import get_stone_putable_pos
 from reversiTools.web_app_reversi_tools import inc_list
 from reversiTools.web_app_reversi_tools import intlist2symbol_list
 from reversiTools.web_app_reversi_tools import step
@@ -35,9 +34,7 @@ b = step(a, 14, -1)
 print(len(b[0]))
 print('step:{}'.format(b))
 
-
-
-print(len(get_simple_board(b[0])))
+print(len(get_stone_putable_pos(b[0])))
 
 dqn_index = get_cp_move(a, -1, 'SL')
 print('SL:{}'.format(dqn_index))
