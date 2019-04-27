@@ -15,8 +15,10 @@ REVERSI_PACKAGES = {
     'INITIAL_BLACK_PLACES': [28, 35]
 }
 
-DQN = {
-    'model1': 'utils/dqn_models/model1/model1.pt'
+MODELS = {
+    'DQN': 'utils/models/dqn/model1.pt',
+    'SL': 'utils/models/sl/model_sl1_1.pt',
+    'RANDOM': ''
 }
 
 MARKS = {

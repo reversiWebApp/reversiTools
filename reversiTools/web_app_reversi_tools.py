@@ -1,13 +1,15 @@
+import copy
 import os
 import random
 
 import numpy as np
 import torch
 
-from reversiTools.utils.dqn_models.models import TheModelClass
+from reversiTools.utils.models.models import TheModelClass
+from reversiTools.utils.models.models import TheModelClassSl1
 from reversiTools.utils.reversi_packages import ReversiPackages
-from reversiTools.utils.settings import DQN
 from reversiTools.utils.settings import MARKS
+from reversiTools.utils.settings import MODELS
 
 
 def intlist2strings(intlist):
@@ -37,12 +39,13 @@ def get_simple_board(board):
                 shape=(1,64)
             stone_putable_pos:list(int)
     """
+    return_board = copy.deepcopy(board)
     stone_putable_pos = []
-    for index in range(len(board)):
-        if board[index] == 2:
-            board[index] = 0
+    for index in range(len(return_board)):
+        if return_board[index] == 2:
+            return_board[index] = 0
             stone_putable_pos.append(index)
-    return board, stone_putable_pos
+    return return_board, stone_putable_pos
 
 
 def get_initial_status():
@@ -87,10 +90,7 @@ def step(board, stone_putted_index, player):
     """
 
     if board:
-        for index in range(len(board)):
-            if board[index] == 2:
-                board[index] = 0
-
+        board = [0 if i == 2 else i for i in board]
     reversi_packages = ReversiPackages(
         board=board,
         options=None
@@ -118,48 +118,83 @@ def step(board, stone_putted_index, player):
                 return board, player, 2, valid_flag
 
 
-def _load_model(file_path):
-    model = TheModelClass(65, 128, 64)
-    model.load_state_dict(torch.load(file_path))
-    model.eval()
+def _load_model(file_path, cp_name):
+    if cp_name == 'DQN':
+        model = TheModelClass(65, 128, 64)
+        model.load_state_dict(torch.load(file_path))
+        model.eval()
+    elif cp_name == 'SL':
+        model = TheModelClassSl1()
+        model.load_state_dict(torch.load(file_path))
+        model.eval()
+    elif cp_name == 'RANDOM':
+        model = None
+    else:
+        raise ValueError('cp_name is not valid')
+
     return model
 
 
-def get_dqn_move(board, player):
+def get_cp_move(board, player, cp_name):
     """
     get dqn move index from board, stone color and pt file path
     :param board: list(int)
         shape=(1,64)
-    :param stone_color:int
+    :param player:int
          -1 -> black
         1 -> white
+    :param cp_name:str
     :return: index(int)
     """
 
     if board:
-        for index in range(len(board)):
-            if board[index] == 2:
-                board[index] = 0
+        board = [0 if i == 2 else i for i in board]
 
-    reversi_package = ReversiPackages(board=board, options=None)
+    reversi_packages = ReversiPackages(board=board, options=None)
     executing_file_path = os.path.dirname(os.path.abspath(__file__))
-    pt_path = DQN['model1']
+    pt_path = MODELS[cp_name]
     file_path = os.path.join(executing_file_path, pt_path)
-    model = _load_model(file_path)
-    with torch.no_grad():
-        input_array = np.append(
-            np.array(player),
-            np.array(reversi_package.get_board_status_filled_with_2(player))
-        )
-        input_data = torch.from_numpy(input_array).type(torch.FloatTensor)
-        input_data_unsqueezed = torch.unsqueeze(input_data, 0)
-        q_values = np.array(model(input_data_unsqueezed)).reshape(-1)
+    model = _load_model(file_path, cp_name)
+    putable_index = reversi_packages.get_stone_putable_pos(player)
+    if cp_name == 'DQN':
+        with torch.no_grad():
+            input_array = np.append(
+                np.array(player),
+                np.array(reversi_packages.get_board_status_filled_with_2(player))
+            )
+            input_data = torch.from_numpy(input_array).type(torch.FloatTensor)
+            input_data_unsqueezed = torch.unsqueeze(input_data, 0)
+            q_values = np.array(model(input_data_unsqueezed)).reshape(-1)
 
-    putable_index = reversi_package.get_stone_putable_pos(player)
-    stone_put_index = putable_index[0]
-    for index in putable_index:
-        if q_values[stone_put_index] < q_values[index]:
-            stone_put_index = index
+        filtered_probability = np.full(64, -100000)
+        for index in putable_index:
+            filtered_probability[index] = q_values[index]
+            stone_put_index = np.argmax(filtered_probability)
+            if filtered_probability[stone_put_index] == -100000:
+                stone_put_index = putable_index[0]
+    if cp_name == 'SL':
+        with torch.no_grad():
+            input_array = np.array(reversi_packages.get_board_status())
+
+            # 黒手番の時の盤面情報は反転させる
+            if player == -1:
+                input_array *= -1
+
+            # 推論に使えるデータサイズに変更する
+            input_array = input_array.reshape(-1, 1, 8, 8)
+
+            # NNの出力を算出
+            input_tensor = torch.Tensor(input_array)
+            output = model(input_tensor)
+            output = np.array(output[0])
+
+        # 置ける場所のうち最大のindexに石を置く
+
+        filterd_probability = np.full(64, -1000)
+        filterd_probability[putable_index] = output[putable_index]
+        stone_put_index = np.argmax(filterd_probability)
+    if cp_name == 'RANDOM':
+        stone_put_index = random.choice(putable_index)
     return stone_put_index
 
 
@@ -176,7 +211,7 @@ def intlist2symbol_list(intlist):
     Returns:
         symbol_list(list)
             length = 64
-            values = ('⚪️','⚫️',str(index),"☆")
+            values = ('⚪','⚫',str(index),"☆")
     '''
     assert len(intlist) == 64, 'input list length is invalid'
 
@@ -195,9 +230,19 @@ def inc_list(putable_pos):
     """
     plus 1 for all element of putablie pos list
     :param putable_pos:list(int)
-    :return:incremented_list:list(int)
+    :return incremented_list:list(int)
     """
     incremented_list = []
     for index in putable_pos:
         incremented_list.append(index + 1)
     return incremented_list
+
+
+def count_stone(board):
+    """
+    count the number of white stone and black stone
+    :param board: list(int)
+    :return the number of white stone:int
+    :return the number of black stone:int
+    """
+    return board.count(ReversiPackages['WHITE']), board.count(ReversiPackages['BLACK'])
