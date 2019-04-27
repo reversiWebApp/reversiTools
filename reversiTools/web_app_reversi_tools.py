@@ -10,6 +10,7 @@ from reversiTools.utils.models.models import TheModelClassSl1
 from reversiTools.utils.reversi_packages import ReversiPackages
 from reversiTools.utils.settings import MARKS
 from reversiTools.utils.settings import MODELS
+from reversiTools.utils.settings import REVERSI_PACKAGES
 
 
 def intlist2strings(intlist):
@@ -245,4 +246,4 @@ def count_stone(board):
     :return the number of white stone:int
     :return the number of black stone:int
     """
-    return int(board.count(ReversiPackages['WHITE'])), int(board.count(ReversiPackages['BLACK']))
+    return board.count(REVERSI_PACKAGES['WHITE']), board.count(REVERSI_PACKAGES['BLACK'])
