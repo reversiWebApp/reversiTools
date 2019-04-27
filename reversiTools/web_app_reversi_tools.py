@@ -245,4 +245,4 @@ def count_stone(board):
     :return the number of white stone:int
     :return the number of black stone:int
     """
-    return board.count(ReversiPackages['WHITE']), board.count(ReversiPackages['BLACK'])
+    return int(board.count(ReversiPackages['WHITE'])), int(board.count(ReversiPackages['BLACK']))

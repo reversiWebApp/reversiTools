@@ -6,7 +6,7 @@ except ImportError:
     from pip.req import parse_requirements
 setup(
     name='reversiTool',
-    version='1.1.2',
+    version='1.1.3',
     url='https://github.com/reversiWebApp/reversiTools.git',
     license='Free',
     author='Hiroya Iyori',
