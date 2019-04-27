@@ -112,9 +112,9 @@ def step(board, stone_putted_index, player):
             return reversi_packages.get_board_status_filled_with_2(player), player, 0, valid_flag
         else:
             if player == reversi_packages.check_winner():
-                return board, player, 1, valid_flag
+                return board, player, player, valid_flag
             elif player == -1 * reversi_packages.check_winner():
-                return board, player, -1, valid_flag
+                return board, player, player, valid_flag
             else:
                 return board, player, 2, valid_flag
 
