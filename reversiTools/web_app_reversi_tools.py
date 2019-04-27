@@ -111,12 +111,8 @@ def step(board, stone_putted_index, player):
         elif reversi_packages.get_stone_putable_pos(player):
             return reversi_packages.get_board_status_filled_with_2(player), player, 0, valid_flag
         else:
-            if player == reversi_packages.check_winner():
-                return board, player, player, valid_flag
-            elif player == -1 * reversi_packages.check_winner():
-                return board, player, player, valid_flag
-            else:
-                return board, player, 2, valid_flag
+            return board, player, reversi_packages.check_winner(), valid_flag
+
 
 
 def _load_model(file_path, cp_name):

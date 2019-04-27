@@ -4,6 +4,7 @@
 
 
 from reversiTools.ml_reversi_tools import get_stone_putable_pos
+
 from reversiTools.web_app_reversi_tools import get_cp_move, count_stone
 from reversiTools.web_app_reversi_tools import get_simple_board
 from reversiTools.web_app_reversi_tools import inc_list
@@ -57,3 +58,13 @@ print(intlist2symbol_list(input_list))
 print(inc_list([1, 3, 4, 5, 5, 6, 92, 2354]))
 c, d = count_stone(b)
 print(type(c))
+a = [1 for i in range(63)]
+a.append(0)
+a[61] = -1
+_, _, x, _ = step(a, 63, -1)
+a = [-1 for i in range(63)]
+a.append(0)
+a[61] = 1
+_, _, y, _ = step(a, 63, 1)
+
+assert ((x == 1) & (y == -1))
