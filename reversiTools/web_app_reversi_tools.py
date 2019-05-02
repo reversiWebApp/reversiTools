@@ -66,7 +66,7 @@ def get_initial_status(player_color=None):
         board=None,
         options=None
     )
-    return reversi_packages.get_board_status_filled_with_2(player_color), player_color
+    return reversi_packages.get_board_status_filled_with_2(-1), player_color
 
 
 def step(board, stone_putted_index, player):
