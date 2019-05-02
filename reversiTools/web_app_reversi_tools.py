@@ -49,16 +49,19 @@ def get_simple_board(board):
     return return_board, stone_putable_pos
 
 
-def get_initial_status():
+def get_initial_status(player_color=None):
     """
-    get initial status
+    get initial status. player color default value is None.
+    :param player_color(int)
+        None -> chose player color randomly
     :return: initial_board: list(int)
         shape = (1,64)
     :return:player_color(int)
         1 -> white
         -1 -> black(preceding player)
     """
-    player_color = random.choice([-1, 1])
+    if player_color is None:
+        player_color = random.choice([-1, 1])
     reversi_packages = ReversiPackages(
         board=None,
         options=None
